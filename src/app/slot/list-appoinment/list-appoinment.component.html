@@ -1,0 +1,60 @@
+
+
+
+<div id="home" class="container-fluid">
+  <div class="row my-3 widget">
+    <div class="col-2">
+    <div class="card p-3">
+      <h6>Count</h6>
+      <h4>{{datas?.length}}</h4>
+
+
+
+    </div>
+   
+    </div>
+  </div>  
+
+
+
+    <div class="row">
+        <div class="col text-right mt-3">
+            <button type="button" class="btn btn-primary btn-sm" (click)="addSlot()"><i class="fe fe-plus"></i>Book Appointment</button>
+
+        </div>
+        <div class="col-12 mt-3">
+            <div class="table-panel">
+<!--                 <ng2-smart-table [settings]="settings" [source]="datas"></ng2-smart-table>
+ -->          
+ <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Patient</th>
+      <th scope="col">Contact</th>
+      <th scope="col">Booked Date</th>
+      <th scope="col">Appointment</th>
+
+    </tr>
+  </thead>
+  <tbody >
+    <tr *ngFor="let list of datas">
+      <td>{{list?.userName | titlecase}}</td>
+      <td>{{list?.contactNumber}}</td>
+      <td>{{list?.appoinmentDate |  date:'mediumDate'}}</td>
+      <td>{{list?.slotstartTime}} {{list.zone | titlecase}}</td>
+
+    </tr>
+  
+   
+  </tbody>
+</table>
+
+
+
+
+
+</div>
+        </div>
+    </div>
+</div>
+

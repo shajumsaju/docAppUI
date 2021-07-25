@@ -1,0 +1,90 @@
+
+<div  class="container-fluid">
+
+  <div class="row mt-3">
+      <div class="col-3">
+        <bs-datepicker-inline [bsValue]="bsInlineValue"  (bsValueChange) = "dayWiseList($event)"
+         [minDate]="bsInlineValue" ></bs-datepicker-inline>
+      </div>
+      <div class="col-9">
+       <div class="card">
+        <div class="card-body">
+          <div class="d-flex mb-3">
+           <h4>Morning </h4>
+          <button  type="button" class="btn btn-outline-primary btn-sm ml-auto" (click)="openModal(template ,'am')">
+            <i class="fe fe-plus"></i>Add Slot</button>
+          </div>
+          <div class="card-body p-0">
+            <ng-container *ngFor=" let lists of slotList">
+            <button 
+            type="button" [disabled] = "lists?.isUser"  *ngIf="lists?.zone=='am'" class="btn btn-outline-primary btn-sm mr-4 mb-4 slotlist"
+            >{{lists?.slotstartTime}}-
+            {{lists?.slotEndTime}}
+          </button>
+          </ng-container>
+          </div>
+       </div>
+       <div class="card-body">
+         <div class="d-flex mb-3">
+         <h4>Evening</h4> 
+        <button  type="button" class="btn btn-outline-primary btn-sm ml-auto" (click)="openModal(template,'pm')"><i class="fe fe-plus"></i>Add Slot</button>
+      </div>
+        <div class="card-body p-0">
+          <ng-container *ngFor=" let lists of slotList">
+            <button 
+            type="button"  [disabled] = "lists?.isUser" *ngIf="lists?.zone=='pm'" class="btn btn-outline-primary btn-sm mr-4 mb-4 slotlist">{{lists?.slotstartTime}}-
+            {{lists?.slotEndTime}}
+          </button>
+          </ng-container>
+  
+        </div>
+     </div>
+       </div>
+      </div>
+     </div>
+  
+  
+     <ng-template #template>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left"> Appointment</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+  
+          <form  [formGroup]="addslotForm" (ngSubmit)="onSubmit()" >
+               <div class="form-row">
+                <div class="form-group col-md-5">
+                  <label for="From">From Time</label> 
+                  <input type="time" formControlName="startTime" (keyup)="fromTime($event)"  class="form-control" id="From">
+                </div>
+                <div
+                *ngIf="addslotForm.controls['startTime'].invalid && (addslotForm.controls['startTime'].dirty || addslotForm.controls['startTime'].touched)"
+                class="text-danger">
+                 From time is required.
+              </div>
+             
+
+                <div class="form-group col-md-5">
+                  <label for="number">To Time</label>
+                  <input type="time" formControlName="endTime"  class="form-control" id="number">
+                </div>
+                <div
+                *ngIf="addslotForm.controls['endTime'].invalid && (addslotForm.controls['endTime'].dirty || addslotForm.controls['startTime'].touched)"
+                class="text-danger">
+                 To time is required.
+              </div>
+                  <div class="form-group  col-md-2">
+                  <button  type="submit" class="btn btn-outline-primary btn-sm mr-2 popbutton" [disabled]="!addslotForm.valid">Submit</button>
+                  </div>
+              </div>
+            
+           
+              <!-- <button type="submit" class="btn btn-primary">Sign in</button> -->
+            </form>
+      </div>
+    </ng-template>
+  
+
+    </div>
