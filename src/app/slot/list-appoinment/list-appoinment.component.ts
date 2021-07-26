@@ -9,46 +9,42 @@ import { CommanServiceService } from '../../shared/comman-service.service'
   styleUrls: ['./list-appoinment.component.scss']
 })
 export class ListAppoinmentComponent implements OnInit {
-  settings = {}
-  datas: any[] = [];
-  modalRef: BsModalRef;
-  items: any[];
+	settings = {}
+	datas: any[] = [];
+	modalRef: BsModalRef;
+	items: any[];
 
-  constructor(private modalService: BsModalService, private router: Router,
-    private commanService: CommanServiceService) {
-    this.items = Array(15).fill(0);
-  }
+	constructor(private modalService: BsModalService, private router: Router,
+		private commanService: CommanServiceService) {
+		this.items = Array(15).fill(0);
+	}
 
-  ngOnInit() {
-    this.bookedList();
-    this.commanService.filterDate.subscribe((filterDate) => {
-      console.log(filterDate)
-      this.datas = []
-      if (filterDate !== null) {
-        this.commanService.get(`/slot/filter?appoinmentDate=${filterDate}`).subscribe((userList) => {
-          userList.map(value => this.datas.push(value))
-        });
-      }
-      else {
-        this.bookedList()
-      }
+	ngOnInit() {
+		this.bookedList();
+		this.commanService.filterDate.subscribe((filterDate) => {
+			this.datas = []
+			if (filterDate !== null) {
+				this.commanService.get(`/slot/filter?appoinmentDate=${filterDate}`).subscribe((userList) => {
+					userList.map(value => this.datas.push(value))
+				});
+			} else {
+				this.bookedList()
+			}
 
-    })
+		})
+	}
 
+	addSlot() {
+		this.router.navigate(['/add']);
+	}
 
-  }
-
-  addSlot() {
-    this.router.navigate(['/add']);
-  }
-
-  bookedList() {
-    this.datas = [];
-    this.commanService.get('/slot').subscribe((userList) => {
-      userList.map((value, index, array) => {
-        this.datas.push(value);
-      });
-    });
-  }
+	bookedList() {
+		this.datas = [];
+		this.commanService.get('/slot').subscribe((userList) => {
+			userList.map((value, index, array) => {
+				this.datas.push(value);
+			});
+		});
+	}
 
 }
